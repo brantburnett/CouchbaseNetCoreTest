@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  couchbasetest:
+    image: user/couchbasetest${TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80"

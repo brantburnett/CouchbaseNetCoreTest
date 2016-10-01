@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using LogLevel = Common.Logging.LogLevel;
 
 namespace CouchbaseTest
 {
@@ -21,6 +22,9 @@ namespace CouchbaseTest
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            Common.Logging.LogManager.Adapter = new Common.Logging.Simple.DebugLoggerFactoryAdapter(LogLevel.Info, true,
+                true, true, "yyyy/MM/dd HH:mm:ss:fff");
 
             var couchbase = new CouchbaseClientDefinition();
             Configuration.GetSection("couchbase").Bind(couchbase);
